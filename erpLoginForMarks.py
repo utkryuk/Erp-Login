@@ -1,4 +1,3 @@
-
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -10,25 +9,16 @@ from bs4 import BeautifulSoup as bs
 import csv
 import pandas as pd
 from selenium.webdriver import Chrome
-
 pd.options.mode.chained_assignment = None
-#opts = Options()
-#opts.set_headless()
-
-#assert opts.headless
-#browser = Firefox(executable_path=r"C:\Users\Ezone\Downloads\geckodriver.exe", options=opts)
-
 
 #For using Chrome browser
-#browser = Chrome(executable_path=r"C:\Users\Ezone\Downloads\chromedriver.exe")
-
+#browser = Chrome(executable_path=r"chromedriver.exe")
 
 def username(usernameOfTheUser, loginField):
     loginField.clear()
     loginField.send_keys(usernameOfTheUser)
     loginField.send_keys(u"\ue004") #unicode for tab key
     time.sleep(2)
-
 
 def password(passwordOfTheUser,passwordField):
     #get the password textbox
@@ -38,10 +28,8 @@ def password(passwordOfTheUser,passwordField):
     passwordField.send_keys(u"\ue004") #unicode for tab key
     time.sleep(2)
 
-
 def checkValidityOfCaptcha(captcha):
     return ((len(captcha)==6) and not(" " in captcha))
-
 
 def captchaSolver(captchaField):
     captchaText = ImageGrab.grab(bbox = (680,473,790,505)) 
@@ -53,8 +41,6 @@ def captchaSolver(captchaField):
     else:
         captchaField.send_keys(u"\ue007") #unicode for enter key
         time.sleep(2)
-    
-
 
 def createList(soup):
     table = soup.find_all(id = "ctl00_ContentPlaceHolder1_grdExaMarDetl")
@@ -88,7 +74,6 @@ def writeCsvFile(fname, data):
     mycsv = csv.writer(open(fname, 'w'))
     for row in data:
         mycsv.writerow(row)
-    
 
 def printTable(fname):
     table = pd.read_csv(fname)
@@ -106,9 +91,8 @@ def printTable(fname):
         print("|  ")
     print("|_________________________________________________________________________________________________________________________________________________|")
 
-
 def main():
-    browser = Firefox(executable_path=r"C:\Users\Ezone\Downloads\geckodriver.exe")
+    browser = Firefox(executable_path=r"geckodriver.exe")
     browser.get("https://erp.bitmesra.ac.in")
     loginField = browser.find_element_by_name("txt_username")
     username("ENTER USERNAME HERE",loginField)
@@ -125,4 +109,3 @@ def main():
 
 if __name__== "__main__":
     main()
-
